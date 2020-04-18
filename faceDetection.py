@@ -9,7 +9,7 @@
 # cascadePath = "haarcascade_frontalface_default.xml"
 # videoInput = cv2.VideoCapture(0) #Setting video source to webcam
 
-# #Creating the haar feature charcteristic (under Viola-Jones Object Detection Framework)
+# #Creating the haar feature characteristic (under Viola-Jones Object Detection Framework)
 # cvCascadeClassifier = cv2.CascadeClassifier(cascadePath)
 
 # videoOn = True
