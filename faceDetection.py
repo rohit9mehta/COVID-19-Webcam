@@ -64,10 +64,24 @@ import math
 
 cascPath = "haarcascade_frontalface_default.xml"
 cascPathHand = "haarcascade_hand3.xml"
+cascPathHandFist = "haarcascade_hand_default.xml"
 faceCascade = cv2.CascadeClassifier(cascPath)
 handCascade = cv2.CascadeClassifier(cascPathHand)
+handCascadeFist = cv2.CascadeClassifier(cascPathHandFist)
 
 video_capture = cv2.VideoCapture(0)
+
+def intersectCheck(x0, y0, x1, y1, x2, y2, x3, y3):
+    #left side intersect
+    if (x3 >= x0 and x2 < x0):
+        if (y3 >= y1 and y2 <= y1) or (y2 <=y0 and y3>= y0):
+            return True
+    #right side intersect
+    if (x3 > x1 and x2 <= x1):
+        if (y3 >= y1 and y2 <= y1) or (y2 <=y0 and y3>= y0):
+            return True
+    else:
+        return False
 
 while True:
     # Capture frame-by-frame
@@ -91,13 +105,39 @@ while True:
         flags=cv2.CASCADE_SCALE_IMAGE
     )
 
+    fists = handCascadeFist.detectMultiScale(
+        gray,
+        scaleFactor=1.1,
+        minNeighbors=5,
+        minSize=(60, 60),
+        flags=cv2.CASCADE_SCALE_IMAGE
+    )
+
     # Draw a rectangle around the faces
+    x0, x1, y0, y1, x2, x3, y2, y3, x4, x5, y4, y5 = 0,0,0,0,0,0,0,0,0,0,0,0
     for (x, y, w, h) in faces:
+        x0 = x
+        y0 = y
+        x1 = x+w
+        y1 = y+h
         cv2.rectangle(frame, (x, y), (x+w, y+h), (0, 255, 0), 2)
     
     for (x, y, w, h) in hands:
+        x2 = x
+        y2 = y
+        x3 = x+w
+        y3 = y+h
         cv2.rectangle(frame, (x, y), (x+w, y+h), (255, 0, 0), 2)
 
+    for (x, y, w, h) in fists:
+        x4 = x
+        y4 = y
+        x5 = x+w
+        y5 = y+h
+        cv2.rectangle(frame, (x, y), (x+w, y+h), (255, 0, 0), 2)
+
+    if (intersectCheck(x0, y0, x1, y1, x2, y2, x3, y3) or intersectCheck(x0, y0, x1, y1, x4, y4, x5, y5)):
+        cv2.putText(frame,'No face touching!',(0,50), cv2.FONT_HERSHEY_SIMPLEX, 2, (0,0,255), 3, cv2.LINE_AA)
     # Display the resulting frame
     cv2.imshow('frame',frame)
 
