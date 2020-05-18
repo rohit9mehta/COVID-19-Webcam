@@ -59,9 +59,13 @@
 
 import cv2
 import sys
+import numpy as np
+import math
 
 cascPath = "haarcascade_frontalface_default.xml"
+cascPathHand = "haarcascade_hand3.xml"
 faceCascade = cv2.CascadeClassifier(cascPath)
+handCascade = cv2.CascadeClassifier(cascPathHand)
 
 video_capture = cv2.VideoCapture(0)
 
@@ -79,15 +83,27 @@ while True:
         flags=cv2.CASCADE_SCALE_IMAGE
     )
 
+    hands = handCascade.detectMultiScale(
+        gray,
+        scaleFactor=1.1,
+        minNeighbors=5,
+        minSize=(60, 60),
+        flags=cv2.CASCADE_SCALE_IMAGE
+    )
+
     # Draw a rectangle around the faces
     for (x, y, w, h) in faces:
         cv2.rectangle(frame, (x, y), (x+w, y+h), (0, 255, 0), 2)
+    
+    for (x, y, w, h) in hands:
+        cv2.rectangle(frame, (x, y), (x+w, y+h), (255, 0, 0), 2)
 
     # Display the resulting frame
-    cv2.imshow('Video', frame)
+    cv2.imshow('frame',frame)
 
     if cv2.waitKey(1) & 0xFF == ord('q'):
         break
+
 
 # When everything is done, release the capture
 video_capture.release()
