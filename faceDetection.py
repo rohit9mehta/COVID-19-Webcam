@@ -64,10 +64,24 @@ import math
 
 cascPath = "haarcascade_frontalface_default.xml"
 cascPathHand = "haarcascade_hand3.xml"
-cascPathHandFist = "haarcascade_hand_default.xml"
+cascPathHandFist = "haarcascade_hand_default.xml" 
+""" 
+NEW CLASSFIERS TO TEST (UNCOMMENT THIS)
+
+cascPathHandFist2 = "haarcascade_fist.xml"
+cascPathGlasses = "haarcascade_eyeglasses.xml"
+cascPathPalm = "haarcascade_palm.xml"
+cascPathClosedPalm = "haarcascade_closed_palm.xml"
+
+handCascadeFist2 = cv2.CascadeClassifier(cascPathHandFist2)
+glassesCascade = cv2.CascadeClassifier(cascPathGlasses)
+palmCascade = cv2.CascadeClassifier(cascPathPalm)
+closedPalmCascade = cv2.CascadeClassifier(cascPathClosedPalm)
+"""
 faceCascade = cv2.CascadeClassifier(cascPath)
 handCascade = cv2.CascadeClassifier(cascPathHand)
 handCascadeFist = cv2.CascadeClassifier(cascPathHandFist)
+
 
 video_capture = cv2.VideoCapture(0)
 
