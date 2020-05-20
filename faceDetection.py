@@ -151,7 +151,7 @@ while True:
         cv2.rectangle(frame, (x, y), (x+w, y+h), (255, 0, 0), 2)
 
     if (intersectCheck(x0, y0, x1, y1, x2, y2, x3, y3) or intersectCheck(x0, y0, x1, y1, x4, y4, x5, y5)):
-        cv2.putText(frame,'No face touching!',(0,50), cv2.FONT_HERSHEY_SIMPLEX, 2, (0,0,255), 3, cv2.LINE_AA)
+        cv2.putText(frame,'PLEASE DO NOT TOUCH YOUR FACE!',(0,50), cv2.FONT_HERSHEY_SIMPLEX, 2, (0,0,255), 3, cv2.LINE_AA)
     # Display the resulting frame
     cv2.imshow('frame',frame)
 
