@@ -20,7 +20,7 @@ app = Flask(__name__)
 
 @app.route('/')
 def index():
-    return render_template('index.html')
+    return render_template('index.html', touches = num_times())
 
 def gen(camera):
     while True:
@@ -32,6 +32,9 @@ def gen(camera):
 def video_feed():
     return Response(gen(VideoCamera()),
                     mimetype='multipart/x-mixed-replace; boundary=frame')
+@app.route('/num_times')
+def num_times():
+    return 0
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', debug=True)
