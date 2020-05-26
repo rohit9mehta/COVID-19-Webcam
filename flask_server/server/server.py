@@ -1,6 +1,10 @@
 from flask import Flask, render_template, Response
 from camera import Camera
 import cv2
+import sys
+# replace with path to folder
+sys.path.append('/Users/Rohit/Desktop/Corona')
+from faceDetection import detector
 
 class VideoCamera(object):
     def __init__(self):
@@ -11,8 +15,10 @@ class VideoCamera(object):
         self.video.release()
 
     def get_frame(self):
-        success, image = self.video.read()
-        ret, jpeg = cv2.imencode('.jpg', image)
+        frame = detector(self.video)
+        success, frame = self.video.read()
+        ret, jpeg = cv2.imencode('.jpg', frame)
+        cv2.imshow('frame',frame)
         return jpeg.tobytes()
 
 
