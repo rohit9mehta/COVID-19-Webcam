@@ -58,29 +58,29 @@
 # cv2.destroyAllWindows() #shuts down all cv stuff
 
 import cv2
-import sys
+# import sys
 import numpy as np
 import math
 
 def detector(video):
     cascPath = "haarcascade_frontalface_default.xml"
     cascPathHand = "haarcascade_hand3.xml"
-    cascPathHandFist = "haarcascade_hand_default.xml" 
+    # cascPathHandFist = "haarcascade_hand_default.xml" 
     # NEW CLASSFIERS TO TEST (UNCOMMENT THIS)
 
-    #cascPathHandFist2 = "haarcascade_fist.xml"
+    cascPathHandFist2 = "haarcascade_fist.xml"
     # cascPathGlasses = "haarcascade_eyeglasses.xml"
-    cascPathPalm = "haarcascade_palm.xml"
-    cascPathClosedPalm = "haarcascade_closed_palm.xml"
+    # cascPathPalm = "haarcascade_palm.xml"
+    # cascPathClosedPalm = "haarcascade_closed_palm.xml"
 
     #handCascadeFist2 = cv2.CascadeClassifier(cascPathHandFist2)
     # glassesCascade = cv2.CascadeClassifier(cascPathGlasses)
-    palmCascade = cv2.CascadeClassifier(cascPathPalm)
-    closedPalmCascade = cv2.CascadeClassifier(cascPathClosedPalm)
+    # palmCascade = cv2.CascadeClassifier(cascPathPalm)
+    # closedPalmCascade = cv2.CascadeClassifier(cascPathClosedPalm)
 
     faceCascade = cv2.CascadeClassifier(cascPath)
     handCascade = cv2.CascadeClassifier(cascPathHand)
-    handCascadeFist = cv2.CascadeClassifier(cascPathHandFist)
+    handCascadeFist2 = cv2.CascadeClassifier(cascPathHandFist2)
 
 
     # video_capture = cv2.VideoCapture(0)
@@ -118,7 +118,7 @@ def detector(video):
         flags=cv2.CASCADE_SCALE_IMAGE
     )
 
-    fists = handCascadeFist.detectMultiScale(
+    fists = handCascadeFist2.detectMultiScale(
         gray,
         scaleFactor=1.1,
         minNeighbors=5,
@@ -134,21 +134,21 @@ def detector(video):
     #     flags=cv2.CASCADE_SCALE_IMAGE
     # )
 
-    palm = palmCascade.detectMultiScale(
-        gray,
-        scaleFactor=1.1,
-        minNeighbors=5,
-        minSize=(60, 60),
-        flags=cv2.CASCADE_SCALE_IMAGE
-    )
+    # palm = palmCascade.detectMultiScale(
+    #     gray,
+    #     scaleFactor=1.1,
+    #     minNeighbors=5,
+    #     minSize=(60, 60),
+    #     flags=cv2.CASCADE_SCALE_IMAGE
+    # )
 
-    closedPalm = closedPalmCascade.detectMultiScale(
-        gray,
-        scaleFactor=1.1,
-        minNeighbors=5,
-        minSize=(60, 60),
-        flags=cv2.CASCADE_SCALE_IMAGE
-    )
+    # closedPalm = closedPalmCascade.detectMultiScale(
+    #     gray,
+    #     scaleFactor=1.1,
+    #     minNeighbors=5,
+    #     minSize=(60, 60),
+    #     flags=cv2.CASCADE_SCALE_IMAGE
+    # )
 
 
     # Draw a rectangle around the faces
@@ -159,21 +159,21 @@ def detector(video):
         y0 = y
         x1 = x+w
         y1 = y+h
-        cv2.rectangle(frame, (x, y), (x+w, y+h), (0, 255, 0), 2)
+        rect1 = cv2.rectangle(frame, (x, y), (x+w, y+h), (0, 255, 0), 2)
     
     for (x, y, w, h) in hands:
         x2 = x
         y2 = y
         x3 = x+w
         y3 = y+h
-        cv2.rectangle(frame, (x, y), (x+w, y+h), (255, 0, 0), 2)
+        rect2 = cv2.rectangle(frame, (x, y), (x+w, y+h), (255, 0, 0), 2)
 
     for (x, y, w, h) in fists:
         x4 = x
         y4 = y
         x5 = x+w
         y5 = y+h
-        cv2.rectangle(frame, (x, y), (x+w, y+h), (255, 0, 0), 2)
+        rect3 = cv2.rectangle(frame, (x, y), (x+w, y+h), (255, 0, 0), 2)
     
     # for (x, y, w, h) in fists2:
     #     x6 = x
@@ -182,22 +182,22 @@ def detector(video):
     #     y7 = y+h
     #     cv2.rectangle(frame, (x, y), (x+w, y+h), (255, 0, 0), 2)
     
-    for (x, y, w, h) in palm:
-        x8 = x
-        y8 = y
-        x9 = x+w
-        y9 = y+h
-        cv2.rectangle(frame, (x, y), (x+w, y+h), (255, 0, 0), 2)
+    # for (x, y, w, h) in palm:
+    #     x8 = x
+    #     y8 = y
+    #     x9 = x+w
+    #     y9 = y+h
+    #     rect4 = cv2.rectangle(frame, (x, y), (x+w, y+h), (255, 0, 0), 2)
     
-    for (x, y, w, h) in closedPalm:
-        x10 = x
-        y10 = y
-        x11 = x+w
-        y11 = y+h
-        cv2.rectangle(frame, (x, y), (x+w, y+h), (255, 0, 0), 2)
+    # for (x, y, w, h) in closedPalm:
+    #     x10 = x
+    #     y10 = y
+    #     x11 = x+w
+    #     y11 = y+h
+    #     rect5 = cv2.rectangle(frame, (x, y), (x+w, y+h), (255, 0, 0), 2)
 
-    if (intersectCheck(x0, y0, x1, y1, x2, y2, x3, y3) or intersectCheck(x0, y0, x1, y1, x4, y4, x5, y5) or intersectCheck(x0, y0, x1, y1, x8, y8, x9, y9) or intersectCheck(x0, y0, x1, y1, x10, y10, x11, y11)):
-        cv2.putText(frame,'PLEASE DO NOT TOUCH YOUR FACE!',(0,50), cv2.FONT_HERSHEY_SIMPLEX, 2, (0,0,255), 3, cv2.LINE_AA)
+    if (intersectCheck(x0, y0, x1, y1, x2, y2, x3, y3) or intersectCheck(x0, y0, x1, y1, x4, y4, x5, y5)):
+        sign = cv2.putText(frame,'PLEASE DO NOT TOUCH YOUR FACE!',(0,50), cv2.FONT_HERSHEY_SIMPLEX, 2, (0,0,255), 3, cv2.LINE_AA)
     # Display the resulting frame
     # return cv2.imshow('frame',frame)
     return frame
