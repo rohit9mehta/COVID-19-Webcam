@@ -104,9 +104,9 @@ def detector(video):
 
     faces = faceCascade.detectMultiScale(
         gray,
-        scaleFactor=1.1,
+        scaleFactor=1.3,
         minNeighbors=5,
-        minSize=(30, 30),
+        minSize=(100, 100),
         flags=cv2.CASCADE_SCALE_IMAGE
     )
 
@@ -114,7 +114,7 @@ def detector(video):
         gray,
         scaleFactor=1.1,
         minNeighbors=5,
-        minSize=(60, 60),
+        minSize=(40, 40),
         flags=cv2.CASCADE_SCALE_IMAGE
     )
 
@@ -122,7 +122,7 @@ def detector(video):
         gray,
         scaleFactor=1.1,
         minNeighbors=5,
-        minSize=(60, 60),
+        minSize=(40, 40),
         flags=cv2.CASCADE_SCALE_IMAGE
     )
 
