@@ -62,13 +62,15 @@ import cv2
 import numpy as np
 import math
 
+absolute_dir = open("absolute_path.txt", "r").read()
+
 def detector(video):
-    cascPath = "haarcascade_frontalface_default.xml"
-    cascPathHand = "haarcascade_hand3.xml"
+    cascPath = absolute_dir + "haarcascade_frontalface_default.xml"
+    cascPathHand = absolute_dir + "haarcascade_hand3.xml"
     # cascPathHandFist = "haarcascade_hand_default.xml" 
     # NEW CLASSFIERS TO TEST (UNCOMMENT THIS)
 
-    cascPathHandFist2 = "haarcascade_fist.xml"
+    cascPathHandFist2 = absolute_dir + "haarcascade_fist.xml"
     # cascPathGlasses = "haarcascade_eyeglasses.xml"
     # cascPathPalm = "haarcascade_palm.xml"
     # cascPathClosedPalm = "haarcascade_closed_palm.xml"
@@ -109,7 +111,7 @@ def detector(video):
         minSize=(30, 30),
         flags=cv2.CASCADE_SCALE_IMAGE
     )
-
+    
     hands = handCascade.detectMultiScale(
         gray,
         scaleFactor=1.1,

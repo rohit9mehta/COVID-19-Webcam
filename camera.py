@@ -2,17 +2,19 @@ import cv2
 import sys
 import imutils
 
+absolute_dir = open("absolute_path.txt", "r").read()
 # replace with path to folder
-sys.path.append('/Users/Rohit/Desktop/Corona')
+sys.path.append(absolute_dir)
 from faceDetection import detector
 
+
 # defining face detector
-cascPath = "haarcascade_frontalface_default.xml"
-cascPathHand = "haarcascade_hand3.xml"
+cascPath = absolute_dir+ "haarcascade_frontalface_default.xml"
+cascPathHand = absolute_dir + "haarcascade_hand3.xml"
 # cascPathHandFist = "haarcascade_hand_default.xml" 
 # NEW CLASSFIERS TO TEST (UNCOMMENT THIS)
 
-cascPathHandFist2 = "haarcascade_fist.xml"
+cascPathHandFist2 = absolute_dir + "haarcascade_fist.xml"
 # cascPathGlasses = "haarcascade_eyeglasses.xml"
 # cascPathPalm = "haarcascade_palm.xml"
 # cascPathClosedPalm = "haarcascade_closed_palm.xml"
