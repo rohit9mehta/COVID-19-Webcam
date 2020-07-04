@@ -45,12 +45,12 @@ class VideoCamera(object):
         interpolation=cv2.INTER_AREA)                    
         gray = cv2.cvtColor(image,cv2.COLOR_BGR2GRAY)
         gray = cv2.GaussianBlur(gray, (7, 7), 0)
-        face_rects = faceCascade.detectMultiScale(gray, 1.3, 5)
+        # face_rects = faceCascade.detectMultiScale(gray, 1.3, 5)
         # hand_rects = handCascade.detectMultiScale(gray, 1.3, 5)
         # fist_rects = handCascadeFist2.detectMultiScale(gray, 1.3, 5)
-        for (x,y,w,h) in face_rects:
-            cv2.rectangle(image,(x,y),(x+w,y+h),(0,255,0),2)
-            break
+        # for (x,y,w,h) in face_rects:
+        #     cv2.rectangle(image,(x,y),(x+w,y+h),(0,255,0),2)
+        #     break
         # for (x, y, w, h) in hand_rects:
         #     x2 = x
         #     y2 = y
