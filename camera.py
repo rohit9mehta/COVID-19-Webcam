@@ -5,7 +5,7 @@ import imutils
 absolute_dir = open("absolute_path.txt", "r").read()
 # replace with path to folder
 sys.path.append(absolute_dir)
-from faceDetection import main
+from faceDetection import detector
 
 
 # defining face detector
@@ -38,7 +38,7 @@ class VideoCamera(object):
         self.video.release()
 
     def get_frame(self):
-        frame = main(self.video)
+        frame = detector(self.video)
         frame = imutils.resize(frame, width=400)
         success, image = self.video.read()
         image = cv2.resize(frame, None, fx=ds_factor, fy=ds_factor,
