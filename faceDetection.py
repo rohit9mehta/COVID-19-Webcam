@@ -30,7 +30,7 @@ def clock():
     return cv.getTickCount() / cv.getTickFrequency()
 
 def detector(video):
-    cam = cv.VideoCapture(0)
+    cam = create_capture(video, fallback='synth:bg={}:noise=0.05'.format(cv.samples.findFile('messi.jpg')))
     while True: 
         #print(video.read())
         _ret, img = cam.read()
@@ -50,6 +50,18 @@ def detector(video):
 
     print('Done')
     #return frame
+    
+def create_capture(source, fallback):
+    source = 0
+    cap = None
+    cap = cv.VideoCapture(source)
+    params = {}
+
+    if cap is None or not cap.isOpened():
+        print('Warning: unable to open video source: ', source)
+        if fallback is not None:
+            return create_capture(fallback, None)
+    return cap
 
 """" TODO
 def intersectCheck(x0, y0, x1, y1, x2, y2, x3, y3):
