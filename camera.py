@@ -38,13 +38,13 @@ class VideoCamera(object):
         self.video.release()
 
     def get_frame(self):
-        frame = main()
+        frame = main(self.video)
         frame = imutils.resize(frame, width=400)
         success, image = self.video.read()
         image = cv2.resize(frame, None, fx=ds_factor, fy=ds_factor,
         interpolation=cv2.INTER_AREA)                    
-        gray = cv2.cvtColor(image,cv2.COLOR_BGR2GRAY)
-        gray = cv2.GaussianBlur(gray, (7, 7), 0)
+        #gray = cv2.cvtColor(image,cv2.COLOR_BGR2GRAY)
+        #gray = cv2.GaussianBlur(gray, (7, 7), 0)
         # face_rects = faceCascade.detectMultiScale(gray, 1.3, 5)
         # hand_rects = handCascade.detectMultiScale(gray, 1.3, 5)
         # fist_rects = handCascadeFist2.detectMultiScale(gray, 1.3, 5)
