@@ -83,6 +83,7 @@ def create_capture(source, fallback):
             return create_capture(fallback, None)
     return cap
 
+"""" TODO
 def intersectCheck(x0, y0, x1, y1, x2, y2, x3, y3):
     #left side intersect
     if (x3 >= x0 and x2 < x0):
@@ -94,6 +95,7 @@ def intersectCheck(x0, y0, x1, y1, x2, y2, x3, y3):
             return True
     else:
         return False
+""" 
 
 if __name__ == '__main__':
     main()
