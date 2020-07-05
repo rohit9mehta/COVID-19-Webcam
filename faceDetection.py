@@ -33,7 +33,7 @@ def detector(video):
     finger = detect(gray, fingerCascade)
     vis = frame.copy()
     
-    x0, x1, y0, y1, x2, x3, y2, y3, x4, x5, y4, y5, x8, x9, y8, y9, x10, x11, y10, y11 = 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+    x0, x1, y0, y1, x2, x3, y2, y3, x4, x5, y4, y5, x6, x7, y6, y7, x10, x11, y10, y11 = 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
     for (x, y, w, h) in faces:
         x0 = x
         y0 = y
