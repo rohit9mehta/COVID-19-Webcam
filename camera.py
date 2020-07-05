@@ -11,12 +11,7 @@ absolute_dir = open("absolute_path.txt", "r").read()
 sys.path.append(absolute_dir)
 from faceDetection import detector
 
-ap = argparse.ArgumentParser()
-ap.add_argument("-n", "--num-frames", type=int, default=100,
-	help="# of frames to loop over for FPS test")
-ap.add_argument("-d", "--display", type=int, default=-1,
-	help="Whether or not frames should be displayed")
-args = vars(ap.parse_args())
+numFrames = 1
 
 # defining face detector
 cascPath = absolute_dir+ "haarcascade_frontalface_default.xml"
@@ -42,28 +37,24 @@ ds_factor=0.6
 
 class VideoCamera(object):
     def __init__(self):
-       self.video = cv2.VideoCapture(0)
+       self.video = WebcamVideoStream(src=0).start()
     
     def __del__(self):
-        self.video.release()
+        self.video.stop()
 
     def get_frame(self):
         #vs = WebcamVideoStream(src=0).start()
         fps = FPS().start()
         
-        while fps._numFrames < args["num_frames"]:
+        while fps._numFrames < numFrames:
             frame = detector(self.video)
             frame = imutils.resize(frame, width=400)
-            success, image = self.video.read()
+            image = self.video.read()
             image = cv2.resize(frame, None, fx=ds_factor, fy=ds_factor,
             interpolation=cv2.INTER_AREA)
                # grab the frame from the stream and resize it to have a maximum
                # width of 400 pixels
                # check to see if the frame should be displayed to our screen
-            if args["display"] > 0:
-                ret, jpeg = cv2.imencode('.jpg', image)
-                return jpeg.tobytes()
-                # update the FPS counter
             fps.update()
-            ret, jpeg = cv2.imencode('.jpg', image)
-            return jpeg.tobytes()
+        ret, jpeg = cv2.imencode('.jpg', image)
+        return jpeg.tobytes()

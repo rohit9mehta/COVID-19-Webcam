@@ -23,7 +23,7 @@ def draw_rects(img, rects, color):
 def detector(video):
     cam = create_capture(video, fallback='synth:bg={}:noise=0.05'.format(cv2.samples.findFile('messi.jpg')))
     # Capture frame-by-frame
-    ret, frame = video.read()
+    frame = video.read()
 
     gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
     gray = cv2.equalizeHist(gray)
