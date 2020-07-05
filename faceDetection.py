@@ -43,13 +43,12 @@ def detector(video):
         draw_rects(frame, rects, (0, 255, 0))
         draw_rects(frame, fist, (0, 0, 255))
         draw_rects(frame, hands, (30, 140, 20))
-        cv.imshow('facedetect', frame)
+        #cv.imshow('facedetect', frame)
 
-        if cv.waitKey(5) == 27:
-            break
+        
 
     print('Done')
-    #return frame
+    return frame
     
 def create_capture(source, fallback):
     source = 0
