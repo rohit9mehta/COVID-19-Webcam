@@ -1,12 +1,22 @@
+from __future__ import print_function
+from imutils.video import WebcamVideoStream
+from imutils.video import FPS
+import argparse
+import imutils
 import cv2
 import sys
-import imutils
 
 absolute_dir = open("absolute_path.txt", "r").read()
 # replace with path to folder
 sys.path.append(absolute_dir)
 from faceDetection import detector
 
+ap = argparse.ArgumentParser()
+ap.add_argument("-n", "--num-frames", type=int, default=100,
+	help="# of frames to loop over for FPS test")
+ap.add_argument("-d", "--display", type=int, default=-1,
+	help="Whether or not frames should be displayed")
+args = vars(ap.parse_args())
 
 # defining face detector
 cascPath = absolute_dir+ "haarcascade_frontalface_default.xml"
@@ -38,36 +48,22 @@ class VideoCamera(object):
         self.video.release()
 
     def get_frame(self):
-        frame = detector(self.video)
-        frame = imutils.resize(frame, width=400)
-        success, image = self.video.read()
-        image = cv2.resize(frame, None, fx=ds_factor, fy=ds_factor,
-        interpolation=cv2.INTER_AREA)                    
-        #gray = cv2.cvtColor(image,cv2.COLOR_BGR2GRAY)
-        #gray = cv2.GaussianBlur(gray, (7, 7), 0)
-        # face_rects = faceCascade.detectMultiScale(gray, 1.3, 5)
-        # hand_rects = handCascade.detectMultiScale(gray, 1.3, 5)
-        # fist_rects = handCascadeFist2.detectMultiScale(gray, 1.3, 5)
-        # for (x,y,w,h) in face_rects:
-        #     cv2.rectangle(image,(x,y),(x+w,y+h),(0,255,0),2)
-        #     break
-        # for (x, y, w, h) in hand_rects:
-        #     x2 = x
-        #     y2 = y
-        #     x3 = x+w
-        #     y3 = y+h
-        #     cv2.rectangle(image, (x, y), (x+w, y+h), (255, 0, 0), 2)
-        #     break
-
-        # for (x, y, w, h) in fist_rects:
-        #     x4 = x
-        #     y4 = y
-        #     x5 = x+w
-        #     y5 = y+h
-        #     cv2.rectangle(image, (x, y), (x+w, y+h), (255, 0, 0), 2)
-        #     break
-        # encode OpenCV raw frame to jpg and displaying it
-        ret, jpeg = cv2.imencode('.jpg', image)
-        return jpeg.tobytes()
-        #return image
-
+        #vs = WebcamVideoStream(src=0).start()
+        fps = FPS().start()
+        
+        while fps._numFrames < args["num_frames"]:
+            frame = detector(self.video)
+            frame = imutils.resize(frame, width=400)
+            success, image = self.video.read()
+            image = cv2.resize(frame, None, fx=ds_factor, fy=ds_factor,
+            interpolation=cv2.INTER_AREA)
+               # grab the frame from the stream and resize it to have a maximum
+               # width of 400 pixels
+               # check to see if the frame should be displayed to our screen
+            if args["display"] > 0:
+                ret, jpeg = cv2.imencode('.jpg', image)
+                return jpeg.tobytes()
+                # update the FPS counter
+            fps.update()
+            ret, jpeg = cv2.imencode('.jpg', image)
+            return jpeg.tobytes()
