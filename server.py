@@ -1,8 +1,6 @@
 from flask import Flask, render_template, Response
 from camera import VideoCamera
 from faceDetection import detector
-import cv2
-
 app = Flask(__name__)
 @app.route('/')
 def index():
@@ -11,6 +9,7 @@ def index():
 def gen(camera):
     while True:
         #get camera frame
+        #frame = camera.get_frame()
         video = cv2.VideoCapture(0)
         frame = detector(video)
         jpeg = cv2.imencode('.jpg', frame)
