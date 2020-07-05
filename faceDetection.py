@@ -2,8 +2,8 @@ import cv2
 # import sys
 import numpy as np
 import math
-
-faceCascade = cv2.CascadeClassifier("haarcascade_frontalface_alt.xml")
+#faceCascade = cv2.CascadeClassifier("lbp_face_cascade.xml") Faster face detection, but less accuracy
+faceCascade = cv2.CascadeClassifier("haarcascade_frontalface_alt.xml") # Slower face detection, but more accuracy
 handCascade = cv2.CascadeClassifier("haarcascade_hand3.xml")
 fistCascade = cv2.CascadeClassifier("haarcascade_fist.xml")
 fingerCascade = cv2.CascadeClassifier("finger.xml")

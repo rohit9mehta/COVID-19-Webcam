@@ -13,26 +13,6 @@ from faceDetection import detector
 
 numFrames = 1
 
-# defining face detector
-cascPath = absolute_dir+ "haarcascade_frontalface_default.xml"
-cascPathHand = absolute_dir + "haarcascade_hand3.xml"
-# cascPathHandFist = "haarcascade_hand_default.xml" 
-# NEW CLASSFIERS TO TEST (UNCOMMENT THIS)
-
-cascPathHandFist2 = absolute_dir + "haarcascade_fist.xml"
-# cascPathGlasses = "haarcascade_eyeglasses.xml"
-# cascPathPalm = "haarcascade_palm.xml"
-# cascPathClosedPalm = "haarcascade_closed_palm.xml"
-
-#handCascadeFist2 = cv2.CascadeClassifier(cascPathHandFist2)
-# glassesCascade = cv2.CascadeClassifier(cascPathGlasses)
-# palmCascade = cv2.CascadeClassifier(cascPathPalm)
-# closedPalmCascade = cv2.CascadeClassifier(cascPathClosedPalm)
-
-faceCascade = cv2.CascadeClassifier(cascPath)
-handCascade = cv2.CascadeClassifier(cascPathHand)
-handCascadeFist2 = cv2.CascadeClassifier(cascPathHandFist2)
-
 ds_factor=0.6
 
 class VideoCamera(object):
