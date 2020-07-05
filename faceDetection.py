@@ -32,7 +32,6 @@ def clock():
 def detector(video):
     cam = create_capture(video, fallback='synth:bg={}:noise=0.05'.format(cv.samples.findFile('messi.jpg')))
     while True: 
-        #print(video.read())
         _ret, img = cam.read()
         gray = cv.cvtColor(img, cv.COLOR_BGR2GRAY)
         gray = cv.equalizeHist(gray)
