@@ -38,9 +38,7 @@ class VideoCamera(object):
         self.video.release()
 
     def get_frame(self):
-        print("Hello")
         frame = detector(self.video)
-        print("KJKJ", frame)
         frame = imutils.resize(frame, width=400)
         success, image = self.video.read()
         image = cv2.resize(frame, None, fx=ds_factor, fy=ds_factor,
@@ -70,5 +68,6 @@ class VideoCamera(object):
         #     break
         # encode OpenCV raw frame to jpg and displaying it
         ret, jpeg = cv2.imencode('.jpg', image)
-        return frame
+        return jpeg.tobytes()
+        #return image
 

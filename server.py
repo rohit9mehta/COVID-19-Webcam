@@ -9,11 +9,11 @@ def index():
 def gen(camera):
     while True:
         #get camera frame
-        #frame = camera.get_frame()
-        video = cv2.VideoCapture(0)
+        frame = camera.get_frame()
+        """ video = cv2.VideoCapture(0)
         frame = detector(video)
         jpeg = cv2.imencode('.jpg', frame)
-        frame = jpeg
+        frame = jpeg """
         yield (b'--frame\r\n'
                b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n\r\n')
 @app.route('/video_feed')
