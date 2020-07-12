@@ -2,14 +2,17 @@ import cv2
 # import sys
 import numpy as np
 import math
-#faceCascade = cv2.CascadeClassifier("lbp_face_cascade.xml") Faster face detection, but less accuracy
-faceCascade = cv2.CascadeClassifier("haarcascade_frontalface_alt.xml") # Slower face detection, but more accuracy
-handCascade = cv2.CascadeClassifier("haarcascade_hand3.xml")
-fistCascade = cv2.CascadeClassifier("haarcascade_fist.xml")
-fingerCascade = cv2.CascadeClassifier("finger.xml")
+
+faceCascade = cv2.CascadeClassifier("cascades/lbp_face_cascade.xml") #Faster face detection, but less accuracy
+#faceCascade = cv2.CascadeClassifier("cascades/haarcascade_frontalface_alt.xml") # Slower face detection, but more accuracy
+#handCascade = cv2.CascadeClassifier("cascades/haarcascade_hand3.xml")
+fistCascade = cv2.CascadeClassifier("cascades/haarcascade_fist.xml")
+fingerCascade = cv2.CascadeClassifier("cascades/haarcascade_closed_palm.xml")
+#"cascades/haarcascade_lefteye_2splits.xml" 
+#"cascades/haarcascade_righteye_2splits.xml"
 
 def detect(img, cascade):
-    rects = cascade.detectMultiScale(img, scaleFactor=1.3, minNeighbors=4, minSize=(30, 30),
+    rects = cascade.detectMultiScale(img, scaleFactor=1.4, minNeighbors=4, minSize=(30, 30),
                                      flags=cv2.CASCADE_SCALE_IMAGE)
     if len(rects) == 0:
         return []
@@ -28,7 +31,7 @@ def detector(video):
     gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
     gray = cv2.equalizeHist(gray)
     faces = detect(gray, faceCascade)
-    hands = detect(gray, handCascade)
+    #hands = detect(gray, handCascade)
     fist = detect(gray, fistCascade)
     finger = detect(gray, fingerCascade)
     vis = frame.copy()
@@ -41,12 +44,12 @@ def detector(video):
         y1 = h
         rect1 = cv2.rectangle(vis, (x, y), (w, h), (0, 255, 0), 2)
     
-    for (x, y, w, h) in hands:
+    """ for (x, y, w, h) in hands:
         x2 = x
         y2 = y
         x3 = w
         y3 = h
-        rect2 = cv2.rectangle(vis, (x, y), (w, h), (255, 0, 0), 2)
+        rect2 = cv2.rectangle(vis, (x, y), (w, h), (255, 0, 0), 2) """
 
     for (x, y, w, h) in fist:
         x4 = x

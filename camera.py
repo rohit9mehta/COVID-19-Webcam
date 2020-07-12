@@ -12,7 +12,6 @@ sys.path.append(absolute_dir)
 from faceDetection import detector
 
 numFrames = 1
-
 ds_factor=0.6
 
 class VideoCamera(object):
