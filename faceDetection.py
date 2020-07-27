@@ -3,9 +3,9 @@ import cv2
 import numpy as np
 import math
 
-faceCascade = cv2.CascadeClassifier("cascades/lbp_face_cascade.xml") #Faster face detection, but less accuracy
-#faceCascade = cv2.CascadeClassifier("cascades/haarcascade_frontalface_alt.xml") # Slower face detection, but more accuracy
-#handCascade = cv2.CascadeClassifier("cascades/haarcascade_hand3.xml")
+#faceCascade = cv2.CascadeClassifier("cascades/lbp_face_cascade.xml") #Faster face detection, but less accuracy
+faceCascade = cv2.CascadeClassifier("cascades/haarcascade_frontalface_alt.xml") # Slower face detection, but more accuracy
+handCascade = cv2.CascadeClassifier("cascades/haarcascade_hand3.xml")
 fistCascade = cv2.CascadeClassifier("cascades/haarcascade_fist.xml")
 fingerCascade = cv2.CascadeClassifier("cascades/haarcascade_closed_palm.xml")
 #"cascades/haarcascade_lefteye_2splits.xml" 
@@ -24,6 +24,7 @@ def draw_rects(img, rects, color):
         cv.rectangle(img, (x1, y1), (x2, y2), color, 2)
 
 def detector(video):
+    faceInFrame = False
     cam = create_capture(video, fallback='synth:bg={}:noise=0.05'.format(cv2.samples.findFile('messi.jpg')))
     # Capture frame-by-frame
     frame = video.read()
@@ -31,7 +32,7 @@ def detector(video):
     gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
     gray = cv2.equalizeHist(gray)
     faces = detect(gray, faceCascade)
-    #hands = detect(gray, handCascade)
+    hands = detect(gray, handCascade)
     fist = detect(gray, fistCascade)
     finger = detect(gray, fingerCascade)
     vis = frame.copy()
@@ -44,12 +45,12 @@ def detector(video):
         y1 = h
         rect1 = cv2.rectangle(vis, (x, y), (w, h), (0, 255, 0), 2)
     
-    """ for (x, y, w, h) in hands:
+    for (x, y, w, h) in hands:
         x2 = x
         y2 = y
         x3 = w
         y3 = h
-        rect2 = cv2.rectangle(vis, (x, y), (w, h), (255, 0, 0), 2) """
+        rect2 = cv2.rectangle(vis, (x, y), (w, h), (255, 0, 0), 2)
 
     for (x, y, w, h) in fist:
         x4 = x
@@ -91,8 +92,14 @@ def create_capture(source, fallback):
             return create_capture(fallback, None)
     return cap
 
+def faceCheck(x0, y0, x1, y1, x2, y2, x3, y3):
+    if (x0 == 0 and x1 == 0 and y0 == 0 and y1 == 0):
+        return True
+
 def intersectCheck(x0, y0, x1, y1, x2, y2, x3, y3):
         #left side intersect
+        if faceCheck(x0, y0, x1, y1, x2, y2, x3, y3):
+            return True
         if (x3 >= x0 and x2 < x0):
             if (y3 >= y1 and y2 <= y1) or (y2 <=y0 and y3>= y0):
                 return True
